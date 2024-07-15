@@ -1,0 +1,59 @@
+public class arr_queue {
+    public static class create {
+        static int arr[];
+        static int size;
+        static int rear = -1;
+
+        create(int n) {
+            arr = new int[n];
+            this.size = n;
+        }
+
+        public static boolean isEmpty() {
+            return (rear == -1);
+        }
+
+        static void enque(int data) {
+            if (size == -1) {
+                System.out.println("the queue is full");
+            }
+            rear++;
+            arr[rear] = data;
+        }
+
+        static int dequeue() {
+            if (isEmpty()) {
+                System.out.println("the queue is empty");
+                return -1;
+            }
+            int front = arr[0];
+            for (int i = 0; i < rear; i++) {
+                arr[i] = arr[i + 1];
+                
+            }rear--;
+            return front;
+        }
+
+        public static int peek() {
+            if (isEmpty()) {
+                System.out.println("the queue is empty");
+            }
+            int front = arr[0];
+            return front;
+        }
+    }
+
+    public static void main(String[] args) {
+        create obj = new create(10);// its given as the size of the queue
+        obj.enque(78);
+        obj.enque(45);
+        obj.enque(87);
+        obj.enque(52);
+        while (!obj.isEmpty()) {
+            System.out.println("the peek is "+obj.peek());
+            obj.dequeue();
+
+        }
+
+    }
+}
