@@ -1,0 +1,24 @@
+class complexNum{
+    int real,img;
+    complexNum(int real,int img){
+        this.real=real;
+        this.img=img;
+        }   
+    void display(){
+        System.out.println("the no is"+real+"i +"+img+" j ");
+    }
+    complexNum add(complexNum num2) {// taking a parameter  2nd no for addition
+        int newReal = this.real + num2.real;
+        int newImg = this.img + num2.img;
+        return new complexNum(newReal, newImg);// it returing as a obj as anonymous type
+    }
+
+ public static void main(String[] args) {
+    complexNum ob=new complexNum(4, 6);
+    complexNum ob2=new complexNum(3, 9);
+    ob2.display();
+    ob.display();
+    complexNum ob3=ob.add(ob2);
+    ob3.display();
+ }   
+}
