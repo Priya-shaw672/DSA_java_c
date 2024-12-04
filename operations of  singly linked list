@@ -1,0 +1,186 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void create();
+void insert_beg();
+void insert_middle();
+void insert_end();
+void display();
+void del_beg();
+void del_end();
+void del_mid();
+
+struct node {
+    int data;
+    struct node *next;
+};
+
+struct node *head = NULL, *newnode, *ptr, *current, *preptr;
+
+void main() {
+    int ch;
+    while (1) {
+        printf("\nEnter your choice:\n");
+        printf("1. Create\n");
+        printf("2. Insert at Beginning\n");
+        printf("3. Insert in Middle\n");
+        printf("4. Insert at End\n");
+        printf("5. Display\n");
+        printf("6. Delete from Beginning\n");
+        printf("7. Delete from End\n");
+        printf("8. Delete from Middle\n");
+        printf("9. Exit\n");
+        scanf("%d", &ch);
+
+        switch (ch) {
+            case 1: create(); break;
+            case 2: insert_beg(); break;
+            case 3: insert_middle(); break;
+            case 4: insert_end(); break;
+            case 5: display(); break;
+            case 6: del_beg(); break;
+            case 7: del_end(); break;
+            case 8: del_mid(); break;
+            case 9: exit(0);
+            default: printf("Invalid choice.\n");
+        }
+    }
+}
+
+void create() {
+    newnode = (struct node *)malloc(sizeof(struct node));
+    printf("Enter the data to insert: ");
+    scanf("%d", &newnode->data);
+    newnode->next = NULL;
+
+    if (head == NULL) {
+        head = newnode;
+        current = newnode;
+    } else {
+        current->next = newnode;
+        current = newnode;
+    }
+    printf("Data inserted: %d\n", current->data);
+}
+
+void insert_beg() {
+    newnode = (struct node *)malloc(sizeof(struct node));
+    printf("Enter the data to insert: ");
+    scanf("%d", &newnode->data);
+    newnode->next = head;
+    head = newnode;
+    printf("Data inserted at beginning: %d\n", newnode->data);
+}
+
+void insert_middle() {
+    int val;
+    if (head == NULL) {
+        printf("The list is empty.\n");
+        return;
+    }
+
+    printf("Enter the value after which to insert: ");
+    scanf("%d", &val);
+
+    for (ptr = head; ptr != NULL; ptr = ptr->next) {
+        if (ptr->data == val) {
+            newnode = (struct node *)malloc(sizeof(struct node));
+            printf("Enter the data to insert: ");
+            scanf("%d", &newnode->data);
+            newnode->next = ptr->next;
+            ptr->next = newnode;
+            printf("Data inserted after %d: %d\n", val, newnode->data);
+            return;
+        }
+    }
+
+    printf("Value %d not found in the list.\n", val);
+}
+
+void insert_end() {
+    create();
+}
+
+void del_beg() {
+    if (head == NULL) {
+        printf("The list is empty, nothing to delete.\n");
+        return;
+    }
+
+    ptr = head;
+    head = head->next;
+    printf("Deleted data: %d\n", ptr->data);
+    free(ptr);
+}
+
+void del_end() {
+    if (head == NULL) {
+        printf("The list is empty, nothing to delete.\n");
+        return;
+    }
+
+    if (head->next == NULL) {
+        printf("Deleted data: %d\n", head->data);
+        free(head);
+        head = NULL;
+        return;
+    }
+
+    ptr = head;
+    while (ptr->next != NULL) {
+        preptr = ptr;
+        ptr = ptr->next;
+    }
+    preptr->next = NULL;
+    printf("Deleted data: %d\n", ptr->data);
+    free(ptr);
+}
+
+void del_mid() {
+    int val;
+    if (head == NULL) {
+        printf("The list is empty, nothing to delete.\n");
+        return;
+    }
+
+    printf("Enter the data to delete: ");
+    scanf("%d", &val);
+
+    if (head->data == val) {
+        ptr = head;
+        head = head->next;
+        free(ptr);
+        printf("Deleted data: %d\n", val);
+        return;
+    }
+
+    ptr = head;
+    while (ptr != NULL && ptr->data != val) {
+        preptr = ptr;
+        ptr = ptr->next;
+    }
+
+    if (ptr == NULL) {
+        printf("Value %d not found in the list.\n", val);
+    } else {
+        preptr->next = ptr->next;
+        printf("Deleted data: %d\n", ptr->data);
+        free(ptr);
+    }
+}
+
+void display() {
+    if (head == NULL) {
+        printf("No nodes to display.\n");
+        return;
+    }
+
+    printf("The complete linked list: ");
+    ptr = head;
+    while (ptr != NULL) {
+        printf("%d -> ", ptr->data);
+        ptr = ptr->next;
+    }
+    printf("NULL\n");
+}
+
