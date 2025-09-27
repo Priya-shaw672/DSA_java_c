@@ -47,7 +47,22 @@ void printPreorder(struct Node* node) {
     printPreorder(node->left);      // Visit left
     printPreorder(node->right);     // Visit right
 }
-
+void printInorder(struct Node* node)
+{
+    if (node == NULL)
+        return;
+    printf("%d",node->left);
+    printf("%d",node->data):
+    printf("%d",node->right);
+}
+void printPostorder(struct Node* node)
+{
+    if(node == NULL)
+        retutrn;
+    printf("%d",node->left);
+    printf("%d",node->right);
+    printf("%d",node->data);
+}
 int main() {
     struct Node* root = NULL;
 
