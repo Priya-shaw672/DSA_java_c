@@ -1,0 +1,62 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// structure for node
+struct Node {
+    int data;
+    struct Node* left;
+    struct Node* right;
+};
+
+// function to create a new node
+struct Node* newNode(int v) {
+    struct Node* node = (struct Node*)malloc(sizeof(struct Node));
+    node->data = v;
+    node->left = NULL;
+    node->right = NULL;
+    return node;
+}
+
+// function to insert a node in BST
+struct Node* insert(struct Node* root, int v) {
+    if (root == NULL) {
+        return newNode(v);
+    }
+    if (v < root->data) {
+        root->left = insert(root->left, v);
+    }
+    else if (v > root->data) {
+        root->right = insert(root->right, v);
+    }
+    return root; 
+}
+
+// inorder traversal (Left ? Root ? Right)
+void inorder(struct Node* root) {
+    if (root != NULL) {
+        inorder(root->left);
+        printf("%d ", root->data);
+        inorder(root->right);
+    }
+}
+
+int main() {
+	int i;
+    struct Node* root = NULL;
+    int n, val;
+
+    printf("Enter number of nodes: ");
+    scanf("%d", &n);
+
+    printf("Enter %d values:\n", n);
+    for (i = 0; i < n; i++) {
+        scanf("%d", &val);
+        root = insert(root, val);
+    }
+
+    printf("\nInorder traversal of BST: ");
+    inorder(root);
+
+    return 0;
+}
+
